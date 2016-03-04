@@ -8,7 +8,7 @@ npm install
 
 # Usage
 
-node index.js user password http://127.0.0.1:8080/login http://127.0.0.1:8080/yourcoolendpoint header-name cookie1 cookie2
+node post.js user password http://127.0.0.1:8080/login http://127.0.0.1:8080/yourcoolendpoint header-name cookie1 cookie2
 
 ## Clarification of the arguments
 
@@ -21,5 +21,7 @@ in.
 
 cookie1 & cookie2: names of the cookies to be taken from login to the new request to
 the second url.
+
+Use get.js instead of post.js if your second endpoint is GET.
 
 

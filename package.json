@@ -2,7 +2,7 @@
   "name": "login-and-request",
   "version": "1.0.0",
   "description": "POST a login and return wanted cookie",
-  "main": "index.js",
+  "main": "post.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
