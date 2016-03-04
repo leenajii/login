@@ -1,5 +1,6 @@
 var request = require('request');
     login = require('./login.js'),
+    cookies = require('./cookies.js'),
     args = process.argv.slice(2),
     user = args[0],
     password = args [1],
@@ -9,31 +10,37 @@ var request = require('request');
     cookie1 = args [5]
     cookie2 = args [6];
 
-var qs = {};
 
-login(loginUrl, user, password, header, function(error, cookies) {
+
+login(loginUrl, user, password, header, function(error, loginCookies) {
     if (error) {
         console.log(error);
     } else {
-        console.log("Cookies from login: " + cookies);
-        callEndpoint(cookies, endpointUrl, qs);
+        console.log("Cookies from login: " + loginCookies);
+        getCookiesAndCallEndpoint(loginCookies, endpointUrl);
     }
 });
 
-function callEndpoint(cookies, url, qs) {
+function getCookiesAndCallEndpoint(loginCookies, endpointUrl) {
+    cookies(loginCookies, cookie1, cookie2, function(cookiemap) {
+        callEndpoint(cookiemap, endpointUrl);
+    });
+}
+
+function callEndpoint(cookiemap, url) {
     console.log("---------------------------------");
     console.log("Calling " + url);
 
     var j = request.jar(),
-        cookiemap = getCookies(cookies, cookie1, cookie2);
+        qs = {};
 
-    Object.keys(cookiemap).forEach(function(key) {
+    Object.keys(cookiemap).forEach(function (key) {
         console.log("Setting cookie to request: " + cookiemap[key])
         j.setCookie(cookiemap[key], url);
     });
 
     request({url: url, jar: j, qs: qs}, function (error, response, body) {
-        if(error) {
+        if (error) {
             console.log(error);
         } else {
             console.log("----------- Response ----------")
@@ -42,22 +49,4 @@ function callEndpoint(cookies, url, qs) {
     })
 }
 
-function getCookies(cookies, cookie1Name, cookie2Name) {
-    var cookie1 = '',
-        cookie2 = '';
-
-    cookies.forEach(function(cookie) {
-        var cookieArr = cookie.split(";");
-
-        cookieArr.forEach(function (c) {
-            if (c.indexOf(cookie1Name) > -1) {
-                cookie1 = c;
-            }
-            if (c.indexOf(cookie2Name) > -1) {
-                cookie2 = c;
-            }
-        });
-    });
-    return {cookie1: cookie1, cookie2: cookie2};
-}
 
