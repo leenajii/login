@@ -4,13 +4,13 @@ var request = require('request'),
 module.exports = {
 
     getCookiesAndPostEndpoint: function (loginCookies, endpointUrl, done) {
-        cookies(loginCookies, cookie1, cookie2, endpointUrl, function (cookiejar) {
+        cookies.cookies(loginCookies, cookie1, cookie2, endpointUrl, function (cookiejar) {
             callEndpoint(cookiejar, endpointUrl, true);
         });
         return done;
     },
     getCookiesAndGetEndpoint: function (loginCookies, endpointUrl) {
-        cookies(loginCookies, cookie1, cookie2, endpointUrl, function (cookiejar) {
+        cookies.cookies(loginCookies, cookie1, cookie2, endpointUrl, function (cookiejar) {
             callEndpoint(cookiejar, endpointUrl, false);
         });
     }
