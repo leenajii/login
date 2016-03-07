@@ -1,5 +1,5 @@
 var expect = require("chai").expect,
-    cookies = require("../cookies.js"),
+    cookies = require("../lib/cookies.js"),
     cookieArr = new Array("SESSIONID=123456789; Path=/foobar/; HttpOnly", "some_user=\"123|user@gmail.com\"; Version=1; Max-Age=1000; Expires=Wed, 08-May-2019 16:49:57 GMT; Path=/'");;
 
 describe("Cookies", function(){
@@ -23,7 +23,6 @@ describe("Cookies", function(){
             var jar = cookies.cookiejar(cookiemap, "http://url.com");
 
             var cookie_string = jar.getCookieString("http://url.com");
-            console.log(cookie_string);
 
             expect(cookie_string).to.equal("SESSIONID=123456789; some_user=\"123|user@gmail.com\"");
         });
@@ -33,7 +32,6 @@ describe("Cookies", function(){
         it("should return cookiejar when given cookies, cookie names and url", function(){
             cookies.cookies(cookieArr, "SESSIONID", "some_user", "http://url.com", function(jar) {
                 var cookie_string = jar.getCookieString("http://url.com");
-                console.log(cookie_string);
 
                 expect(cookie_string).to.equal("SESSIONID=123456789; some_user=\"123|user@gmail.com\"");
             });
