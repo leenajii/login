@@ -8,7 +8,9 @@ npm install
 
 # Usage
 
-node post.js user password http://127.0.0.1:8080/login http://127.0.0.1:8080/yourcoolendpoint header-name cookie1 cookie2
+node index.js user password http://127.0.0.1:8080/login http://127.0.0.1:8080/yourcoolendpoint header-name cookie1 cookie2
+
+Or use directly post/get modules.
 
 ## Clarification of the arguments
 
