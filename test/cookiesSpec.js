@@ -1,10 +1,10 @@
-var expect = require("chai").expect;
-var cookies = require("../cookies.js");
+var expect = require("chai").expect,
+    cookies = require("../cookies.js"),
+    cookieArr = new Array("SESSIONID=123456789; Path=/foobar/; HttpOnly", "some_user=\"123|user@gmail.com\"; Version=1; Max-Age=1000; Expires=Wed, 08-May-2019 16:49:57 GMT; Path=/'");;
 
 describe("Cookies", function(){
     describe("#getCookiemap()", function(){
         it("should return two cookies with names when given array with cookies", function(){
-            var cookieArr = new Array("SESSIONID=123456789; Path=/foobar/; HttpOnly", "some_user=\"123|user@gmail.com\"; Version=1; Max-Age=1000; Expires=Wed, 08-May-2019 16:49:57 GMT; Path=/'");
             var results = cookies.getCookiemap(cookieArr, "SESSIONID", "some_user");
 
             expect(Object.keys(results).length).to.equal(2);
@@ -26,6 +26,17 @@ describe("Cookies", function(){
             console.log(cookie_string);
 
             expect(cookie_string).to.equal("SESSIONID=123456789; some_user=\"123|user@gmail.com\"");
+        });
+    });
+
+    describe("#cookies()", function(){
+        it("should return cookiejar when given cookies, cookie names and url", function(){
+            cookies.cookies(cookieArr, "SESSIONID", "some_user", "http://url.com", function(jar) {
+                var cookie_string = jar.getCookieString("http://url.com");
+                console.log(cookie_string);
+
+                expect(cookie_string).to.equal("SESSIONID=123456789; some_user=\"123|user@gmail.com\"");
+            });
         });
     });
 });
