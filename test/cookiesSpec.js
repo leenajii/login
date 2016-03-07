@@ -16,4 +16,16 @@ describe("Cookies", function(){
             expect(results["cookie2"]).to.equal("some_user=\"123|user@gmail.com\"");
         });
     });
+
+    describe("#cookiejar()", function(){
+        it("should return cookiejar", function(){
+            var cookiemap = {cookie1: "SESSIONID=123456789", cookie2: "some_user=\"123|user@gmail.com\""};
+            var jar = cookies.cookiejar(cookiemap, "http://url.com");
+
+            var cookie_string = jar.getCookieString("http://url.com");
+            console.log(cookie_string);
+
+            expect(cookie_string).to.equal("SESSIONID=123456789; some_user=\"123|user@gmail.com\"");
+        });
+    });
 });
