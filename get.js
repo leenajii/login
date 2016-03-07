@@ -1,5 +1,5 @@
-var login = require('./login.js'),
-    call = require('./call.js'),
+var login = require('./lib/login.js'),
+    call = require('./lib/call.js'),
     args = process.argv.slice(2),
     user = args[0],
     password = args [1],
